@@ -194,3 +194,400 @@
         SecondaryButton:
             text: "Back"
             on_release: app.root.current = "menu"
+
+
+########################################
+# SERVICES SCREEN
+########################################
+<Services>:
+    name: "services"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 10
+        spacing: 10
+
+        Label:
+            text: "Service Manager"
+            font_size: 28
+
+        TextInput:
+            id: category
+            hint_text: "Category (Print, Xerox, Scan)"
+        TextInput:
+            id: name
+            hint_text: "Service Name"
+        TextInput:
+            id: unit
+            hint_text: "Unit (per page / per hour)"
+        TextInput:
+            id: price
+            hint_text: "Price (₹)"
+            input_filter: "float"
+
+        BoxLayout:
+            spacing: 10
+            PrimaryButton:
+                text: "Add"
+                on_release: root.add_service()
+            PrimaryButton:
+                text: "Update"
+                on_release: root.update_service()
+            PrimaryButton:
+                text: "Delete"
+                on_release: root.delete_service()
+
+        Label:
+            text: "Existing Services"
+            font_size: 22
+
+        ScrollView:
+            GridLayout:
+                id: service_list
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+
+        SecondaryButton:
+            text: "Back"
+            on_release: app.root.current = "menu"
+
+
+########################################
+# PAYMENT METHODS SCREEN
+########################################
+<Payments>:
+    name: "payments"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 10
+        spacing: 10
+
+        Label:
+            text: "Payment Methods"
+            font_size: 28
+
+        TextInput:
+            id: pay_input
+            hint_text: "Add Payment Method (Cash, UPI, etc.)"
+
+        PrimaryButton:
+            text: "Add"
+            on_release: root.add_method()
+
+        Label:
+            text: "Available Methods"
+            font_size: 22
+
+        ScrollView:
+            GridLayout:
+                id: pay_list
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+
+        SecondaryButton:
+            text: "Back"
+            on_release: app.root.current = "menu"
+
+
+########################################
+# CUSTOMERS (Udhaar) SCREEN
+########################################
+<Customers>:
+    name: "customers"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 10
+        spacing: 10
+
+        Label:
+            text: "Customers / Udhaar"
+            font_size: 28
+
+        TextInput:
+            id: name
+            hint_text: "Customer Name"
+
+        TextInput:
+            id: phone
+            hint_text: "Phone Number"
+
+        PrimaryButton:
+            text: "Add Customer"
+            on_release: root.add_customer()
+
+        Label:
+            text: "Customer List"
+            font_size: 22
+
+        ScrollView:
+            GridLayout:
+                id: customer_list
+                cols: 1
+                height: self.minimum_height
+                size_hint_y: None
+
+        SecondaryButton:
+            text: "Back"
+            on_release: app.root.current = "menu"
+
+
+########################################
+# LEDGER SCREEN
+########################################
+<Ledger>:
+    name: "ledger"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 10
+
+        Label:
+            id: ledger_title
+            text: "Ledger"
+            font_size: 28
+
+        TextInput:
+            id: amount
+            hint_text: "Amount (₹)"
+            input_filter: "float"
+
+        TextInput:
+            id: notes
+            hint_text: "Notes"
+
+        BoxLayout:
+            spacing: 10
+            PrimaryButton:
+                text: "Given"
+                on_release: root.add_transaction("given")
+            PrimaryButton:
+                text: "Paid"
+                on_release: root.add_transaction("paid")
+
+        Label:
+            text: "Transactions"
+            font_size: 22
+
+        ScrollView:
+            GridLayout:
+                id: ledger_list
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+
+        SecondaryButton:
+            text: "Back"
+            on_release: app.root.current = "customers"
+
+
+########################################
+# EXPENSES SCREEN
+########################################
+<Expenses>:
+    name: "expenses"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 10
+
+        Label:
+            text: "Expenses"
+            font_size: 28
+
+        TextInput:
+            id: date
+            hint_text: "Date (YYYY-MM-DD)"
+
+        TextInput:
+            id: category
+            hint_text: "Category (Internet, Ink, Rent, etc.)"
+
+        TextInput:
+            id: amount
+            hint_text: "Amount (₹)"
+            input_filter: "float"
+
+        TextInput:
+            id: notes
+            hint_text: "Notes"
+
+        PrimaryButton:
+            text: "Add Expense"
+            on_release: root.add_expense()
+
+        Label:
+            text: "Expense History"
+            font_size: 22
+
+        ScrollView:
+            GridLayout:
+                id: expense_list
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+
+        SecondaryButton:
+            text: "Back"
+            on_release: app.root.current = "menu"
+
+
+########################################
+# REPORTS SCREEN
+########################################
+<Reports>:
+    name: "reports"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 10
+        spacing: 5
+
+        Label:
+            text: "Reports"
+            font_size: 28
+
+        BoxLayout:
+            spacing: 5
+            TextInput:
+                id: from_date
+                hint_text: "From Date (YYYY-MM-DD)"
+            TextInput:
+                id: to_date
+                hint_text: "To Date (YYYY-MM-DD)"
+
+        Spinner:
+            id: report_type
+            text: "Daily"
+            values: ["Daily", "Monthly", "Custom", "Payment-wise", "Service-wise"]
+            height: 40
+            size_hint_y: None
+
+        PrimaryButton:
+            text: "Generate Report"
+            on_release: root.generate_report()
+
+        ScrollView:
+            GridLayout:
+                id: report_list
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+
+        BoxLayout:
+            spacing: 5
+            PrimaryButton:
+                text: "PDF"
+                on_release: root.export_pdf()
+            PrimaryButton:
+                text: "Word"
+                on_release: root.export_word()
+            PrimaryButton:
+                text: "CSV"
+                on_release: root.export_excel()
+
+        SecondaryButton:
+            text: "Back"
+            on_release: app.root.current = "menu"
+
+
+########################################
+# COUNTERS SCREEN
+########################################
+<Counters>:
+    name: "counters"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 10
+
+        Label:
+            text: "Counters"
+            font_size: 28
+
+        TextInput:
+            id: print_pages
+            hint_text: "Print Pages Today"
+        TextInput:
+            id: xerox_pages
+            hint_text: "Xerox Pages Today"
+        TextInput:
+            id: scans
+            hint_text: "Scans Today"
+
+        PrimaryButton:
+            text: "Save Counters"
+            on_release: root.save_counters()
+
+        SecondaryButton:
+            text: "Back"
+            on_release: app.root.current = "menu"
+
+
+########################################
+# TOOLS SCREEN
+########################################
+<Tools>:
+    name: "tools"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 10
+
+        Label:
+            text: "Tools"
+            font_size: 28
+
+        PrimaryButton:
+            text: "Backup Database"
+            on_release: root.backup()
+
+        PrimaryButton:
+            text: "Restore Backup"
+            on_release: root.restore()
+
+        SecondaryButton:
+            text: "Back"
+            on_release: app.root.current = "menu"
+
+
+########################################
+# SETTINGS SCREEN
+########################################
+<Settings>:
+    name: "settings"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 10
+
+        Label:
+            text: "Settings"
+            font_size: 28
+
+        TextInput:
+            id: shop_name
+            hint_text: "Shop Name"
+
+        TextInput:
+            id: owner_name
+            hint_text: "Owner Name"
+
+        TextInput:
+            id: address
+            hint_text: "Shop Address"
+
+        TextInput:
+            id: phone
+            hint_text: "Phone Number"
+
+        PrimaryButton:
+            text: "Upload Logo"
+            on_release: root.choose_logo()
+
+        Spinner:
+            id: theme_spinner
+            text: "light"
+            values: ["light", "dark", "blue"]
+
+        PrimaryButton:
+            text: "Save Settings"
+            on_release: root.save_settings()
+
+        SecondaryButton:
+            text: "Back"
+            on_release: app.root.current = "menu"
