@@ -1,0 +1,196 @@
+#:include components.kv
+
+<POSManager>:
+    MainMenu:
+    Dashboard:
+    Billing:
+    Services:
+    Payments:
+    Customers:
+    Ledger:
+    Expenses:
+    Reports:
+    Counters:
+    Tools:
+    Settings:
+
+<MainMenu>:
+    name: "menu"
+    BoxLayout:
+        orientation: "vertical"
+        spacing: 12
+        padding: 15
+
+        Label:
+            text: "LAKSHMI KRISHNA NET CENTRE POS"
+            font_size: 26
+
+        PrimaryButton:
+            text: "Dashboard"
+            on_release: app.root.current = "dashboard"
+        PrimaryButton:
+            text: "Billing"
+            on_release: app.root.current = "billing"
+        PrimaryButton:
+            text: "Services"
+            on_release: app.root.current = "services"
+        PrimaryButton:
+            text: "Payment Methods"
+            on_release: app.root.current = "payments"
+        PrimaryButton:
+            text: "Customers"
+            on_release: app.root.current = "customers"
+        PrimaryButton:
+            text: "Expenses"
+            on_release: app.root.current = "expenses"
+        PrimaryButton:
+            text: "Reports"
+            on_release: app.root.current = "reports"
+        PrimaryButton:
+            text: "Counters"
+            on_release: app.root.current = "counters"
+        PrimaryButton:
+            text: "Tools"
+            on_release: app.root.current = "tools"
+        PrimaryButton:
+            text: "Settings"
+            on_release: app.root.current = "settings"
+
+
+########################################
+# DASHBOARD SCREEN
+########################################
+<Dashboard>:
+    name: "dashboard"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 10
+        spacing: 10
+
+        Label:
+            text: "Dashboard"
+            font_size: 30
+
+        BoxLayout:
+            spacing: 10
+            size_hint_y: 0.2
+
+            BoxLayout:
+                orientation: "vertical"
+                Label:
+                    text: "Sales Today"
+                Label:
+                    id: sales_today
+                    text: "₹0"
+                    font_size: 24
+
+            BoxLayout:
+                orientation: "vertical"
+                Label:
+                    text: "Bills Today"
+                Label:
+                    id: bills_today
+                    text: "0"
+                    font_size: 24
+
+            BoxLayout:
+                orientation: "vertical"
+                Label:
+                    text: "Top Service"
+                Label:
+                    id: top_service
+                    text: "-"
+                    font_size: 24
+
+        BoxLayout:
+            id: graph_area
+            size_hint_y: 0.7
+
+        SecondaryButton:
+            text: "Back"
+            on_release: app.root.current = "menu"
+
+
+########################################
+# BILLING SCREEN
+########################################
+<Billing>:
+    name: "billing"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 10
+        spacing: 10
+
+        Label:
+            text: "Billing"
+            font_size: 30
+
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            Label:
+                text: "Bill No:"
+                size_hint_x: 0.3
+            Label:
+                id: bill_no
+                text: "LKNC-00001"
+
+        Spinner:
+            id: service_spinner
+            text: "Select Service"
+            height: 45
+            size_hint_y: None
+
+        BoxLayout:
+            spacing: 8
+            size_hint_y: None
+            height: 40
+
+            TextInput:
+                id: qty
+                hint_text: "Qty"
+                input_filter: "float"
+
+            TextInput:
+                id: discount
+                hint_text: "Discount"
+                input_filter: "float"
+
+        PrimaryButton:
+            text: "Add to Bill"
+            on_release: root.add_to_bill()
+
+        ScrollView:
+            GridLayout:
+                id: bill_table
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+
+        BoxLayout:
+            spacing: 10
+            Label:
+                text: "Total:"
+                font_size: 26
+            Label:
+                id: total
+                text: "₹0"
+                font_size: 26
+
+        TextInput:
+            id: customer_name
+            hint_text: "Customer Name (optional)"
+
+        Spinner:
+            id: payment_spinner
+            text: "Select Payment Method"
+            height: 40
+            size_hint_y: None
+
+        PrimaryButton:
+            text: "Save Bill"
+            on_release: root.save_bill()
+
+        SecondaryButton:
+            text: "Back"
+            on_release: app.root.current = "menu"
